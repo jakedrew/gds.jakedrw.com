@@ -18,9 +18,6 @@
         respond 404
     }
 
-    @bare expression {path} == "/" && {query.model} == ""
-    redir @bare "/?model=https://{host}/model.oas&pdk=sky130A"
-
     handle /model.oas {
         root * /srv/models
         rewrite * /{labels.3}.oas
