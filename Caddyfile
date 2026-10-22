@@ -1,0 +1,34 @@
+{
+    admin off
+    auto_https off
+}
+
+:2491 {
+    header Content-Security-Policy "connect-src 'self'"
+
+    handle /ask {
+        map {query.domain} {proj} {
+            ~^([a-z0-9-]+)\.gds\.jakedrw\.com$ "${1}"
+        }
+        @known file {
+            root /srv/models
+            try_files /{proj}.oas
+        }
+        respond @known 200
+        respond 404
+    }
+
+    @bare expression {path} == "/" && {query.model} == ""
+    redir @bare "/?model=https://{host}/model.oas&pdk=sky130A"
+
+    handle /model.oas {
+        root * /srv/models
+        rewrite * /{labels.3}.oas
+        file_server
+    }
+
+    handle {
+        root * /srv/gds
+        file_server
+    }
+}
