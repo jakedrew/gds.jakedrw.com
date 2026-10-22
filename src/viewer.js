@@ -496,6 +496,7 @@ function init3D() {
 
 function initGUI() {
   const gui = new GUI();
+  gui.close();
 
   let guiViewSettings = gui.addFolder('View Settings');
   guiViewSettings.open();
@@ -747,9 +748,11 @@ function animate() {
 
   // B&W mode
   if (!experimental_bw_mode_on) {
-    scene.background = new THREE.Color(0x606060);
+    // scene.background = new THREE.Color(0x606060);
+    scene.background = new THREE.Color(0xf9f9f9);
   } else {
-    scene.background = new THREE.Color(0);
+    // scene.background = new THREE.Color(0);
+    scene.background = new THREE.Color(0xf9f9f9);
   }
 
   // Main render
